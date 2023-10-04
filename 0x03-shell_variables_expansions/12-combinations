@@ -1,0 +1,2 @@
+#!/bin/bash
+echo a..z,a..z -except oo | head -n 10
