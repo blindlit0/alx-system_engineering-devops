@@ -1,0 +1,8 @@
+SH client configuration
+
+# Host-specific configuration
+Host web-01
+    HostName 34.201.174.204
+    User ubuntu
+    IdentityFile ~/.ssh/school
+    PasswordAuthentication no
