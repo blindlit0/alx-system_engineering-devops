@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Configure server to listen on port 80
+
+# Update nginx configuration  to listen to port 80
+sed -i "s/8080/80/g" /etc/nginx/sites-enabled/default
+
+# Restart nginx service for changes to apply
+service nginx restart
+
+# Clear nginx process ID file to prevent errors
+echo "" | sudo dd status=none of=/run/nginx.pid
