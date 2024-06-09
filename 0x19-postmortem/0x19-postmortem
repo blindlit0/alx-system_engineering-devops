@@ -1,0 +1,40 @@
+Postmortem Report: Web Application Outage
+Issue Summary
+Duration of Outage:
+Start: March 15, 2024, 10:00 AM UTC
+End: March 15, 2024, 12:30 PM UTC
+Impact:
+The main web application was down, causing users to experience 502 Bad Gateway errors. Approximately 80% of users were affected, resulting in significant disruption of service.
+Root Cause:
+A misconfigured Nginx load balancer resulted in a failure to route traffic correctly to the backend servers.
+Sometimes it feels like Nginx just doesnt want to cooperate!
+Timeline
+10:00 AM: Issue detected via automated monitoring alert indicating a spike in 502 errors.
+10:05 AM: Engineering team notified through pager alerts.
+10:10 AM: Initial investigation began focusing on backend server health.
+10:20 AM: Assumption made that the database was the root cause due to previous similar issues.
+10:45 AM: Database logs and performance metrics analyzed, showing no anomalies.
+11:00 AM: Investigation shifted to application server logs, revealing no significant errors.
+11:20 AM: Escalated to the network engineering team for further investigation.
+11:40 AM: Network team discovered misconfiguration in the Nginx load balancer.
+12:00 PM: Configuration corrected and changes deployed.
+12:30 PM: Full service restored and monitored for stability.
+Root Cause and Resolution
+Root Cause:
+The Nginx load balancer was misconfigured during a recent update. Specifically, the configuration file had an incorrect upstream server block that prevented proper traffic routing to the backend application servers. This caused Nginx to return 502 errors as it could not reach the intended services.
+Resolution:
+The misconfiguration in the Nginx configuration file was identified and corrected. The correct upstream server block was restored, and the Nginx service was reloaded to apply the changes. Once the correct configuration was in place, traffic routing normalized, and the web application became accessible to users.
+Corrective and Preventative Measures
+Improvements/Fixes:
+Implement a stricter review process for configuration changes.
+Enhance monitoring to include specific checks for Nginx load balancer configurations.
+Improve logging for faster identification of misconfigurations in the load balancer.
+Tasks to Address the Issue:
+Patch Nginx Server:
+Review and apply any necessary security and stability patches to the Nginx server.
+Add Monitoring:
+Implement detailed monitoring on Nginx configuration changes and set up alerts for misconfigurations.
+Automate Configuration Checks:
+Develop scripts to automatically check Nginx configurations for errors before deployment.
+Our checklist for preventing future incidents.
+Thank you for reading, and remember: To err is human, to really foul things up requires a computer! 
